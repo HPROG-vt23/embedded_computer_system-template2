@@ -149,7 +149,8 @@
 #define CPU_REGISTER_DATA_WIDTH    8  /* 8 bit data width per CPU register. */
 #define IO_REGISTER_DATA_WIDTH     8  /* 8 bit data width per I/O location. */
 
-#define I 4 /* Interrupt flag in status register. */
+#define I 5 /* Interrupt flag in status register. */
+#define S 4 /* Signed flag in status register. */
 #define N 3 /* Negative flag in status register. */
 #define Z 2 /* Zero flag in status register. */
 #define V 1 /* Overflow flag in status register. */
@@ -157,7 +158,7 @@
 
 /********************************************************************************
 * set: Sets bit in specified register without affecting other bits.
-* 
+*
 *      - reg: Reference to the register.
 *      - bit: The bit to be set in the referenced register.
 ********************************************************************************/

@@ -5,17 +5,17 @@
 #include "control_unit.h"
 
 /* Static variables: */
-static uint32_t ir;    /* Instruction register, stores next instruction to execute. */
-static uint8_t pc;     /* Program counter, stores address to next instruction to fetch. */
-static uint8_t mar;    /* Memory address register, stores address for current instruction. */
-static uint8_t sr;     /* Status register, stores status bits INZVC. */
+static uint32_t ir; /* Instruction register, stores next instruction to execute. */
+static uint8_t pc;  /* Program counter, stores address to next instruction to fetch. */
+static uint8_t mar; /* Memory address register, stores address for current instruction. */
+static uint8_t sr;  /* Status register, stores status bits ISNZVC. */
 
 static uint8_t op_code; /* Stores OP-code, for example LDI, OUT, JMP etc. */
 static uint8_t op1;     /* Stores first operand, most often a destination. */
 static uint8_t op2;     /* Stores second operand, most often a value or read address. */
 
-static uint8_t reg[CPU_REGISTER_ADDRESS_WIDTH]; /* CPU-registers R0 - R31. */
 static enum cpu_state state;                    /* Stores current state. */
+static uint8_t reg[CPU_REGISTER_ADDRESS_WIDTH]; /* CPU-registers R0 - R31. */
 
 /* Temporary memories: */
 static uint8_t data_memory[2000];        /* Contains I/O-addresses and stores static variables. */
@@ -66,55 +66,56 @@ void control_unit_run_next_state(void)
       }
       case CPU_STATE_DECODE:
       {        
-         op_code = ir >> 16;           /* Bit 23 downto 16 consist of the OP code. */
+         op_code = ir >> 16;           /* Bit 23 downto 16 consists of the OP code. */
          op1 = ir >> 8;                /* Bit 15 downto 8 consists of the first operand. */
-         op2 = ir;                     /* Bit 7 downto 0 constist of the second operand. */
+         op2 = ir;                     /* Bit 7 downto 0 consists of the second operand. */
          state = CPU_STATE_EXECUTE;    /* Executes the instruction during next clock cycle. */
          break;
       }
       case CPU_STATE_EXECUTE:
       {
-         switch (op_code)              /* Executes specified operation. */
+         switch (op_code) /* Checks the OP code.*/
          {
-            case NOP:               
-            {
-               break;
-            }
-            case LDI:              
-            {
-               reg[op1] = op2;
-               break;
-            }
-            case MOV: 
-            {
-               reg[op1] = reg[op2];
-               break;
-            }
-            case OUT:
-            {
-               data_memory[op1] = reg[op2];
-               break;
-            }
-            case IN: 
-            {
-               reg[op1] = data_memory[op2];
-               break;
-            }
-            case JMP: 
-            {
-               pc = op1;
-               break;
-            }
-            default:
-            {
-               control_unit_reset();
-               break;
-            }
+         case NOP:
+         {
+            break; /* NOP => do nothing. */
          }
-         state = CPU_STATE_FETCH;      /* Fetches next instruction during next clock cycle. */
+         case LDI:
+         {
+            reg[op1] = op2; /* LDI R16, 0x01 => op_code = LDI, op1 = R16, op2 = 0x01 */
+            break;
+         }
+         case MOV:
+         {
+            reg[op1] = reg[op2]; /* MOV R17, R16 => op_code = MOV, op1 = R17, op2 = R16 */
+            break;
+         }
+         case OUT:
+         {
+            data_memory[op1] = reg[op2]; /* OUT DDRB, R16 => op_code = OUT, op1 = DDRB, op2 = R16 */
+            break;
+         }
+         case IN:
+         {
+            reg[op1] = data_memory[op2]; /* IN R16, PINB => op_code = IN, op1 = R16, op2 = PINB */
+            break;
+         }
+         case JMP:
+         {
+            pc = op1; /* JMP 0x05 => op_code = JMP, op1 = 0x05 */
+            break;
+         }
+         default:
+         {
+            control_unit_reset(); /* System reset if error occurs. */
+            break;
+         }
+         }
+
+         state = CPU_STATE_FETCH; /* Fetches next instruction during next clock cycle. */
          break;
       }
-      default:                         /* System reset if error occurs. */
+      default: /* System reset if error occurs. */
       {
          control_unit_reset();
          break;
@@ -155,7 +156,7 @@ void control_unit_print(void)
    printf("%s ", get_binary((ir >> 8) & 0xFF, 8));
    printf("%s\n", get_binary(ir & 0xFF, 8));
 
-   printf("Status register (INZVC):\t\t\t%s\n\n", get_binary(sr, 5));
+   printf("Status register (ISNZVC):\t\t\t%s\n\n", get_binary(sr, 6));
 
    printf("Content in CPU register R16:\t\t\t%s\n", get_binary(reg[R16], 8));
    printf("Content in CPU register R24:\t\t\t%s\n\n", get_binary(reg[R24], 8));
