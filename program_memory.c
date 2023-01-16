@@ -18,8 +18,8 @@
 #define LED3 PORTB2 /* LED 3 connected to pin 10 (PORTB2). */
 
 /********************************************************************************
-* data: Program memory with capacity for storing 1024 instructions at address
-*       0 - 1023. Currently the code is written directly as machine code.
+* data: Program memory with capacity for storing 256 instructions at address
+*       0 - 255. Currently the code is written directly as machine code.
 *       Preferably an assembler should be used to convert from assembly
 *       to machine code.
 ********************************************************************************/

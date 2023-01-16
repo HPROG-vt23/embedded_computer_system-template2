@@ -12,7 +12,7 @@
 /* Include directives: */
 #include "cpu.h"
 
-/* Macrodefinitions: */
+/* Macro definitions: */
 #define PROGRAM_MEMORY_DATA_WIDTH    24  /* 24 bits per instruction. */
 #define PROGRAM_MEMORY_ADDRESS_WIDTH 256 /* Capacity for storage of 256 instructions. */
 
