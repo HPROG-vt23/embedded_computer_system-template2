@@ -1,7 +1,10 @@
 /********************************************************************************
 * program_memory.c: Contains function definitions and macro definitions for
-*                   implementation of a 1 kB program memory, capable
-*                   of storing up to 1024 24-bit instructions.
+*                   implementation of a 6 kB program memory, capable of storing
+*                   up to 256 24-bit instructions. Since C doesn't support
+*                   unsigned 24-bit integers (without using structs or unions),
+*                   the program memory is set to 32 bits data width, but only
+*                   24 bits are used.
 ********************************************************************************/
 #include "program_memory.h"
 
@@ -20,7 +23,7 @@
 *       Preferably an assembler should be used to convert from assembly
 *       to machine code.
 ********************************************************************************/
-static const uint32_t data[1024] = 
+static const uint32_t data[PROGRAM_MEMORY_ADDRESS_WIDTH] = 
 {
    /********************************************************************************
    * RESET_vect: Reset vector and start address for the program. A jump is made

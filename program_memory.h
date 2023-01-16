@@ -1,10 +1,10 @@
 /********************************************************************************
-* program_memory.h: Contains function declarations and macro definitions
-*                   for implementation of a 1 kB program memory, capable
-*                   of storing up to 1024 24-bit instructions. 
-*                   Since C doesn't support unsigned 24-bit integers (without
-*                   using structs or unions), the program memory is set to
-*                   32 bits.
+* program_memory.h: Contains function declarations and macro definitions for
+*                   implementation of a 6 kB program memory, capable of storing
+*                   up to 256 24-bit instructions. Since C doesn't support 
+*                   unsigned 24-bit integers (without using structs or unions), 
+*                   the program memory is set to 32 bits data width, but only
+*                   24 bits are used.
 ********************************************************************************/
 #ifndef PROGRAM_MEMORY_H_
 #define PROGRAM_MEMORY_H_
@@ -13,8 +13,8 @@
 #include "cpu.h"
 
 /* Macrodefinitions: */
-#define PROGRAM_MEMORY_DATA_WIDTH    24   /* 24 bits per instruction. */
-#define PROGRAM_MEMORY_ADDRESS_WIDTH 1024 /* Capacity for storage of 1024 instructions. */
+#define PROGRAM_MEMORY_DATA_WIDTH    24  /* 24 bits per instruction. */
+#define PROGRAM_MEMORY_ADDRESS_WIDTH 256 /* Capacity for storage of 256 instructions. */
 
 /********************************************************************************
 * program_memory_read: Returns the instruction at specified address. If an
@@ -33,6 +33,5 @@ uint32_t program_memory_read(const uint8_t address);
 *                                 - address: Address within the subroutine.
 ********************************************************************************/
 const char* program_memory_subroutine_name(const uint8_t address);
-
 
 #endif /* PROGRAM_MEMORY_H_ */

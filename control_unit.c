@@ -159,6 +159,8 @@ void control_unit_print(void)
    printf("Status register (ISNZVC):\t\t\t%s\n\n", get_binary(sr, 6));
 
    printf("Content in CPU register R16:\t\t\t%s\n", get_binary(reg[R16], 8));
+   printf("Content in CPU register R17:\t\t\t%s\n", get_binary(reg[R17], 8));
+   printf("Content in CPU register R18:\t\t\t%s\n", get_binary(reg[R18], 8));
    printf("Content in CPU register R24:\t\t\t%s\n\n", get_binary(reg[R24], 8));
 
    printf("Content in data direction register DDRB:\t%s\n", get_binary(data_memory[DDRB], 8));
