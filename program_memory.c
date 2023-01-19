@@ -1,10 +1,10 @@
 /********************************************************************************
 * program_memory.c: Contains function definitions and macro definitions for
-*                   implementation of a 6 kB program memory, capable of storing
-*                   up to 256 24-bit instructions. Since C doesn't support
-*                   unsigned 24-bit integers (without using structs or unions),
-*                   the program memory is set to 32 bits data width, but only
-*                   24 bits are used.
+*                   implementation of a 0.75 kB program memory, capable of 
+*                   storing up to 256 24-bit instructions. Since C doesn't
+*                   support unsigned 24-bit integers (without using structs or 
+*                   unions), the program memory is set to 32 bits data width, 
+*                   but only 24 bits are used.
 ********************************************************************************/
 #include "program_memory.h"
 
